@@ -1,4 +1,6 @@
 import { useState } from "react";
+import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -65,88 +67,19 @@ function App() {
   return (
     <>
       <h2>My Todo List</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <span>제목</span>
-          <input
-            type="text"
-            placeholder="제목입력"
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
-        </label>
-        <label>
-          <span>내용</span>
-          <input
-            type="text"
-            placeholder="내용 입력"
-            value={text}
-            onChange={(e) => {
-              setText(e.target.value);
-            }}
-          />
-        </label>
-        <button type="submit">추가하기</button>
-      </form>
-      <ul>
-        <h2>Working</h2>
-        {/* //false일때 */}
-        {todoList.map(function (list) {
-          if (!list.active) {
-            //active: true
-            return (
-              <li key={list.id}>
-                <p>{list.title}</p>
-                <p>{list.text}</p>
-                <button
-                  onClick={() => {
-                    handleDelete(list.id);
-                  }}
-                >
-                  삭제
-                </button>
-                <button
-                  onClick={() => {
-                    handleComplete(list.id);
-                  }}
-                >
-                  완료
-                </button>
-              </li>
-            );
-          }
-        })}
-      </ul>
-      <ul>
-        <h2>Done</h2>
-        {todoList.map(function (list) {
-          if (list.active) {
-            //active: false
-            return (
-              <li key={list.id}>
-                <p>{list.title}</p>
-                <p>{list.text}</p>
-                <button
-                  onClick={() => {
-                    handleDelete(list.id);
-                  }}
-                >
-                  삭제
-                </button>
-                <button
-                  onClick={() => {
-                    handleCancle(list.id);
-                  }}
-                >
-                  취소
-                </button>
-              </li>
-            );
-          }
-        })}
-      </ul>
+      <TodoForm
+        handleSubmit={handleSubmit}
+        title={title}
+        setTitle={setTitle}
+        text={text}
+        setText={setText}
+      ></TodoForm>
+      <TodoList
+        todoList={todoList}
+        handleDelete={handleDelete}
+        handleComplete={handleComplete}
+        handleCancle={handleCancle}
+      />
     </>
   );
 }
